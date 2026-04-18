@@ -97,7 +97,7 @@ ThemeData buildHobbiSportTheme(HobbiSportPalette palette) {
         side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.55)),
       ),
     ),
-    iconTheme: IconThemeData(color: foreground),
+    iconTheme: const IconThemeData(color: foreground),
     dividerColor: scheme.outlineVariant.withValues(alpha: 0.55),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       elevation: 0,

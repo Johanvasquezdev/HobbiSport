@@ -58,3 +58,31 @@ class PostLocalDatasourceImpl implements PostLocalDatasource {
     }
   }
 }
+
+class InMemoryPostLocalDatasource implements PostLocalDatasource {
+  final Map<String, PostModel> _cache = <String, PostModel>{};
+
+  @override
+  Future<void> cachePosts(List<PostModel> posts) async {
+    for (final post in posts) {
+      _cache[post.id] = post;
+    }
+  }
+
+  @override
+  Future<void> deletePost(String id) async {
+    _cache.remove(id);
+  }
+
+  @override
+  Future<List<PostModel>> getCachedPosts() async {
+    final posts = _cache.values.toList()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return posts;
+  }
+
+  @override
+  Future<void> upsertPost(PostModel post) async {
+    _cache[post.id] = post;
+  }
+}

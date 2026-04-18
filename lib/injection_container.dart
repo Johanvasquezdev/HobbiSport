@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -52,9 +53,11 @@ Future<void> _registerExternal() async {
 }
 
 Future<void> _registerCore() async {
-  sl.registerLazySingleton<StorageService>(() => StorageServiceImpl());
-  final db = await sl<StorageService>().database();
-  sl.registerSingleton<Database>(db);
+  if (!kIsWeb) {
+    sl.registerLazySingleton<StorageService>(() => StorageServiceImpl());
+    final db = await sl<StorageService>().database();
+    sl.registerSingleton<Database>(db);
+  }
 
   sl.registerLazySingleton<AuthService>(() => AuthServiceImpl(sl<FirebaseAuth>()));
   sl.registerLazySingleton<ThemeService>(() => ThemeServiceImpl(sl<SharedPreferences>()));
@@ -90,9 +93,10 @@ void _registerCommunity() {
   sl.registerLazySingleton<PostRemoteDatasource>(
     () => PostRemoteDatasourceImpl(sl<FirebaseFirestore>()),
   );
-  sl.registerLazySingleton<PostLocalDatasource>(
-    () => PostLocalDatasourceImpl(sl<Database>()),
-  );
+  sl.registerLazySingleton<PostLocalDatasource>(() {
+    if (kIsWeb) return InMemoryPostLocalDatasource();
+    return PostLocalDatasourceImpl(sl<Database>());
+  });
 
   sl.registerLazySingleton<PostRepository>(
     () => PostRepositoryImpl(remote: sl(), local: sl(), auth: sl()),
@@ -117,9 +121,10 @@ void _registerAgenda() {
   sl.registerLazySingleton<EventRemoteDatasource>(
     () => EventRemoteDatasourceImpl(sl<FirebaseFirestore>()),
   );
-  sl.registerLazySingleton<EventLocalDatasource>(
-    () => EventLocalDatasourceImpl(sl<Database>()),
-  );
+  sl.registerLazySingleton<EventLocalDatasource>(() {
+    if (kIsWeb) return InMemoryEventLocalDatasource();
+    return EventLocalDatasourceImpl(sl<Database>());
+  });
 
   sl.registerLazySingleton<EventRepository>(
     () => EventRepositoryImpl(remote: sl(), local: sl(), auth: sl()),
@@ -145,9 +150,10 @@ void _registerSports() {
   sl.registerLazySingleton<SportRemoteDatasource>(
     () => SportRemoteDatasourceImpl(sl<FirebaseFirestore>()),
   );
-  sl.registerLazySingleton<SportLocalDatasource>(
-    () => SportLocalDatasourceImpl(sl<Database>()),
-  );
+  sl.registerLazySingleton<SportLocalDatasource>(() {
+    if (kIsWeb) return InMemorySportLocalDatasource();
+    return SportLocalDatasourceImpl(sl<Database>());
+  });
 
   sl.registerLazySingleton<SportRepository>(
     () => SportRepositoryImpl(remote: sl(), local: sl(), auth: sl()),

@@ -138,3 +138,26 @@ class EventLocalDatasourceImpl implements EventLocalDatasource {
     }
   }
 }
+
+class InMemoryEventLocalDatasource implements EventLocalDatasource {
+  final Map<String, EventModel> _cache = <String, EventModel>{};
+
+  @override
+  Future<void> cacheEvents(List<EventModel> events) async {
+    for (final event in events) {
+      _cache[event.id] = event;
+    }
+  }
+
+  @override
+  Future<void> deleteEvent(String id) async {
+    _cache.remove(id);
+  }
+
+  @override
+  Future<List<EventModel>> getCachedEvents() async {
+    final events = _cache.values.toList()
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    return events;
+  }
+}

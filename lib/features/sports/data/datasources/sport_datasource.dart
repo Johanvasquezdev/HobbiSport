@@ -137,3 +137,26 @@ class SportLocalDatasourceImpl implements SportLocalDatasource {
     }
   }
 }
+
+class InMemorySportLocalDatasource implements SportLocalDatasource {
+  final Map<String, SportActivityModel> _cache = <String, SportActivityModel>{};
+
+  @override
+  Future<void> cacheActivities(List<SportActivityModel> activities) async {
+    for (final activity in activities) {
+      _cache[activity.id] = activity;
+    }
+  }
+
+  @override
+  Future<void> deleteActivity(String id) async {
+    _cache.remove(id);
+  }
+
+  @override
+  Future<List<SportActivityModel>> getCachedActivities() async {
+    final activities = _cache.values.toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+    return activities;
+  }
+}
