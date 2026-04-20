@@ -13,10 +13,10 @@
 
 **HobbiSport** is a modern, community-driven mobile app designed to help users:
 
-* Track hobbies 🎨
-* Log sports activities 🏃
-* Engage with a community 💬
-* Manage personal events 📅
+- Track hobbies 🎨
+- Log sports activities 🏃
+- Engage with a community 💬
+- Manage personal events 📅
 
 Built with **Flutter + Clean Architecture**, this project simulates a real production-ready app.
 
@@ -26,35 +26,35 @@ Built with **Flutter + Clean Architecture**, this project simulates a real produ
 
 ### 🎨 Hobbies
 
-* Create, edit, delete hobbies
-* Categorized content
-* Personal descriptions
+- Create, edit, delete hobbies
+- Categorized content
+- Personal descriptions
 
 ### 💬 Community
 
-* Social feed
-* Post system (likes & comments ready)
+- Social feed
+- Post system (likes & comments ready)
 
 ### 📅 Agenda
 
-* Weekly calendar view
-* Event scheduling
-* Color-coded activities
+- Weekly calendar view
+- Event scheduling
+- Color-coded activities
 
 ### 🏃 Sports
 
-* Activity tracking
-* Stats (distance, duration)
-* Session history
+- Activity tracking
+- Stats (distance, duration)
+- Session history
 
 ---
 
 ## 🎨 UI & Design
 
-* 🌙 Dark mode first
-* 🎯 Modern UI (Linear / Notion inspired)
-* 🧩 Reusable components
-* 🎛️ Multi-theme system
+- 🌙 Dark mode first
+- 🎯 Modern UI (Linear / Notion inspired)
+- 🧩 Reusable components
+- 🎛️ Multi-theme system
 
 ### Themes
 
@@ -102,15 +102,15 @@ lib/
 
 Prepared for:
 
-* Firebase Firestore
-* Firebase Authentication
+- Firebase Firestore
+- Firebase Authentication
 
 Collections:
 
-* hobbies
-* posts
-* events
-* sports
+- hobbies
+- posts
+- events
+- sports
 
 ---
 
@@ -137,16 +137,15 @@ flutter run
 
 ---
 
-
 ---
 
 ## 🔥 Roadmap
 
-* [ ] Full Firebase integration
-* [ ] Authentication system
-* [ ] Real-time community feed
-* [ ] Advanced sports analytics
-* [ ] Notifications
+- [ ] Full Firebase integration
+- [ ] Authentication system
+- [ ] Real-time community feed
+- [ ] Advanced sports analytics
+- [ ] Notifications
 
 ---
 
@@ -155,11 +154,13 @@ flutter run
 MIT License
 
 ---
+
 ## Authors
 
 Johan Gabriel Vasquez
 
 ---
+
 ## ⭐ Support
 
 If you like this project, give it a ⭐ on GitHub!
