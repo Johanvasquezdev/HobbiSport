@@ -3,6 +3,11 @@ import 'hobbisport_models.dart';
 import 'hobbisport_theme.dart';
 import 'hobbisport_widgets.dart';
 
+import '../../features/hobbies/presentation/screens/new_hobby_screen.dart';
+import '../../features/community/presentation/screens/new_post_screen.dart';
+import '../../features/agenda/presentation/screens/new_event_screen.dart';
+import '../../features/sports/presentation/screens/new_activity_screen.dart';
+
 class HobbiSportApp extends StatefulWidget {
   const HobbiSportApp({
     super.key,
@@ -46,7 +51,7 @@ class _HobbiSportAppState extends State<HobbiSportApp> {
               ),
               const SizedBox(height: 8),
               Text(
-                'UI placeholder for quick actions.',
+                'Launch a new entry for your journey.',
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall
@@ -54,7 +59,7 @@ class _HobbiSportAppState extends State<HobbiSportApp> {
               ),
               const SizedBox(height: 16),
               FilledButton.icon(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: _navigateToCreate,
                 icon: const Icon(Icons.add),
                 label: Text('Add ${_activeTab.addLabel}'),
               ),
@@ -62,6 +67,41 @@ class _HobbiSportAppState extends State<HobbiSportApp> {
           ),
         );
       },
+    );
+  }
+
+  void _navigateToCreate() {
+    Navigator.of(context).pop(); // Close bottom sheet
+
+    Widget screen;
+    String routeName;
+
+    switch (_activeTab) {
+      case HobbiSportTab.hobbies:
+        screen = const NewHobbyScreen();
+        routeName = '/hobbies/new';
+        break;
+      case HobbiSportTab.community:
+        screen = const NewPostScreen();
+        routeName = '/community/new';
+        break;
+      case HobbiSportTab.agenda:
+        screen = const NewEventScreen();
+        routeName = '/agenda/new';
+        break;
+      case HobbiSportTab.sports:
+        screen = const NewActivityScreen();
+        routeName = '/sports/new';
+        break;
+      default:
+        return;
+    }
+
+    debugPrint('Action: Triggered Create Flow for ${_activeTab.label}');
+    debugPrint('Navigation: Navigating to $routeName');
+    
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => screen),
     );
   }
 
@@ -78,7 +118,12 @@ class _HobbiSportAppState extends State<HobbiSportApp> {
                 Column(
                   children: [
                     _ShellHeader(
-                      onAvatarTap: () {},
+                      onAvatarTap: () {
+                        debugPrint('Action: Triggered User Profile (Route: /profile)');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Profile navigation coming soon!')),
+                        );
+                      },
                     ),
                     Expanded(
                       child: DecoratedBox(
@@ -219,7 +264,10 @@ class _BottomNavBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () => onTabChanged(tab),
+                  onTap: () {
+                    debugPrint('Navigation: Switching to tab ${tab.label} (Route: /${tab.label.toLowerCase()})');
+                    onTabChanged(tab);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Column(
